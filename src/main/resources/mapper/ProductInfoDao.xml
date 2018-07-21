@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.imooc.dao.ProductInfoDao">
+
+
+    <!--返回结果为1代表插入成功-->
+    <insert id="save" useGeneratedKeys="true" keyProperty="productId" keyColumn="product_id">
+        INSERT INTO product_info (product_id,product_name, product_price,product_stock,product_description,product_icon,product_status,category_type)
+        VALUES (#{productId},#{productName}, #{productPrice},#{productStock},#{productDescription},#{productIcon},#{productStatus},#{categoryType});
+    </insert>
+
+    <update id="update" parameterType="java.util.Map">
+        update product_info p
+        <set>
+            <foreach collection="fields.entrySet()" index="key" item="value" separator=",">
+                <if test="key != 'product_id'.toString()">
+                  ${key} = #{value}
+                </if>
+            </foreach>
+        </set>
+        <where>
+            p.product_id=#{product_id}
+        </where>
+    </update>
+
+    <select id="findByProductStatus" resultType="ProductInfo" parameterType="java.lang.Integer">
+        select *
+        from product_info p where p.product_status=#{productStatus};
+    </select>
+
+
+    <select id="findAll" resultType="ProductInfo">
+        select *
+        from product_info p ;
+    </select>
+
+    <select id="findOne" resultType="ProductInfo" parameterType="java.lang.String">
+        select *
+        from product_info p
+        where p.product_id=#{productId};
+    </select>
+
+</mapper>
