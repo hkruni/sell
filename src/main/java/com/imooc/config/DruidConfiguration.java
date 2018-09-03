@@ -79,7 +79,14 @@ public class DruidConfiguration {
     @Value("${spring.datasource.logSlowSql}")
     private String logSlowSql;
 
+    @Value("${test.name}")
+    private String name;
+
+    @Value("${test.multi}")
+    private String multi;
+
     public ServletRegistrationBean druidServlet() {
+
         ServletRegistrationBean reg = new ServletRegistrationBean();
         reg.setServlet(new StatViewServlet());
         reg.addUrlMappings("/druid/*");
@@ -91,6 +98,8 @@ public class DruidConfiguration {
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
+        System.out.println("test.name : " + name);
+        System.out.println("test.multi : " + multi);
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new WebStatFilter());
         filterRegistrationBean.addUrlPatterns("/*");

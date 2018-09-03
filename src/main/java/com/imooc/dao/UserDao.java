@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface UserDao {
 
     public User getUserByUsercode(@Param("usercode") String usercode);
+
+    public void saveUser(User user);
 }

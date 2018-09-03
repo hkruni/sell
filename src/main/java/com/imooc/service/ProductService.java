@@ -11,6 +11,7 @@ import com.imooc.enums.ResultEnum;
 import com.imooc.exception.SellException;
 import com.imooc.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,12 +52,19 @@ public class ProductService {
 
 
 
-    public void increaseCatagoryAndProduct(ProductCategory productCategory,ProductInfo productInfo) {
-        productCategoryDao.save(productCategory);
+    public void increaseCatagoryAndProduct(ProductCategory productCategory) {
+        try {
+            int x = productCategoryDao.save(productCategory);
+            System.out.println("increaseCatagoryAndProduct : " + x);
+        }catch (Exception e) {
+            System.out.println("1111111111111111");
+            //e.printStackTrace();
+        }
 
-        int a = 1 / 0;
 
-        productInfoDao.save(productInfo);
+        //int a = 1 / 0;
+
+        //productInfoDao.save(productInfo);
     }
 
 

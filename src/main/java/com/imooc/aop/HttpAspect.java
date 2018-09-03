@@ -10,8 +10,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Aspect
-@Component
+//注意:AOP代理会创建代理Controller,那样类的注解将失效,所以尽量不要对controller层使用aop
+//@Aspect
+//@Component
 public class HttpAspect {
 
     private final static Logger logger = LoggerFactory.getLogger(HttpAspect.class);
@@ -19,7 +20,7 @@ public class HttpAspect {
     /**
      * 定义AOP扫描路径
      */
-    @Pointcut("execution(public * com.imooc.controller.*.*())")
+    @Pointcut("execution(public * com.imooc.controller.*.*(..))")
     public void log(){}
 
     /**
@@ -38,7 +39,7 @@ public class HttpAspect {
         String params = request.getQueryString();
         //Object []args = joinPoint.getArgs();
 
-        logger.info("url:[" + url + "]\tmethod:[" + method + "]\tip:[" + ip + "]\tclassName:[" +className+ "]\tmethodName:[\" +methodName+ \"]\tparams:[" + params + "]");
+        logger.info("url:[" + url + "]\tmethod:[" + method + "]\tip:[" + ip + "]\tclassName:[" +className+ "]\tmethodName:[" + methodName + "]\tparams:[" + params + "]");
     }
 
     /**
@@ -56,6 +57,6 @@ public class HttpAspect {
      */
     @AfterReturning(returning = "object",pointcut = "log()")
     public void doAfterReturn(Object object){
-        logger.info("response={}",object.toString());
+        //logger.info("response={}",object.toString());
     }
 }

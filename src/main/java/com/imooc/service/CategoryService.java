@@ -31,8 +31,8 @@ public class CategoryService {
         return productCategoryDao.findAll(query);
     }
 
-    public List<ProductCategory> findAllWithProduct() {
-        return productCategoryDao.findAllWithProduct();
+    public List<ProductCategory> findAllWithProduct(Integer type) {
+        return productCategoryDao.findAllWithProduct(type);
     }
 
     public List<ProductCategory> findByCategoryTypeIn(List<Integer> categoryTypeList) {

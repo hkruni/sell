@@ -11,6 +11,11 @@
         WHERE u.usercode=#{usercode};
 
     </select>
+    
+    <insert id="saveUser" parameterType="user">
+        insert into user(username,password,usercode)
+        VALUES (#{username},#{password},#{usercode})
+    </insert>
 
 
 
