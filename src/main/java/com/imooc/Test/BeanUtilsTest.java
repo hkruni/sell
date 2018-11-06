@@ -14,33 +14,32 @@ public class BeanUtilsTest {
 
     public static void main(String[] args) {
 
-        User user = new User();
-        user.setName("hukai");
-        user.setAge(12);
-        user.setBirthday(new Date());
+        User u1 = new User();
+        u1.setName("hukai");
+        u1.setAge(12);
+        u1.setBirthday(new Date());
         ContactInfo info = new ContactInfo();
         info.setAddress("北京市");
         info.setPhone("15117945727");
         info.setEmail("hkruni@163.com");
-        user.setContactInfo(info);
+        u1.setContactInfo(info);
 
 
-        User u = new User();
-        BeanUtils.copyProperties(user,u);//复制user对象
-        System.out.println(u.getBirthday() == user.getBirthday());
-        System.out.println(u.getName() == user.getName());
-        //System.out.println(u);
-        //System.out.println(user.getContactInfo() == u.getContactInfo());//但是引用对象是浅复制
-        BeanUtils.copyProperties(user.getContactInfo(),u.getContactInfo());
-        System.out.println(u);
-        System.out.println(u.getContactInfo() == user.getContactInfo());
+        User u2 = new User();
+        BeanUtils.copyProperties(u1,u2);//复制user对象
+        System.out.println(u2.getBirthday() == u1.getBirthday());///true
+        System.out.println(u2.getName() == u1.getName());//true
+        System.out.println(u1.getContactInfo() == u2.getContactInfo());//但是引用对象是浅复制 true
+        BeanUtils.copyProperties(u1.getContactInfo(),u2.getContactInfo());
+        System.out.println(u2);
+        System.out.println(u2.getContactInfo() == u1.getContactInfo());//true
 
         System.out.println("-------------");
-        BeanUser beanUser = new BeanUser();
-        BeanUtils.copyProperties(user,beanUser);//ContactInfo的属性无法赋值到里面
-        System.out.println(beanUser);
-        BeanUtils.copyProperties(info,beanUser);//所以需要再次复制ContactInfo
-        System.out.println(beanUser);
+        BeanUser u3 = new BeanUser();
+        BeanUtils.copyProperties(u1,u3);//ContactInfo的属性无法赋值到里面
+        System.out.println(u3);
+        BeanUtils.copyProperties(info,u3);//所以需要再次复制ContactInfo
+        System.out.println(u3);
 
 
 

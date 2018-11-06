@@ -1,14 +1,17 @@
 package com.imooc.netty;
 
 
+import com.imooc.netty.bean.ClientRequest;
+import com.imooc.netty.bean.Response;
+import com.imooc.netty.client.TcpClient;
 import com.imooc.object.User;
 
 import java.util.Date;
 
 /**
- * Created by hukai on 2018/8/22.
+ * spring客户端访问
  */
-public class TestTcp2 {
+public class TestSpringClient {
 
     public static void main(String[] args) {
         ClientRequest request = new ClientRequest();

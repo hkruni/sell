@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.imooc.dao.ProductInfoDao">
 
+    <resultMap id="pruductinfo" type="ProductInfo">
+        <id property="categoryId" column="category_id" javaType="java.lang.Integer" />
+        <result property="categoryName" column="category_name" javaType="java.lang.String" />
+        <result property="categoryType" column="category_type" javaType="java.lang.Integer" />
+        <result property="createTime" column="create_time" javaType="java.util.Date" />
+        <result property="updateTime" column="update_time" javaType="java.util.Date" />
+    </resultMap>
+
 
     <!--返回结果为1代表插入成功-->
     <insert id="save" useGeneratedKeys="true" keyProperty="productId" keyColumn="product_id">

@@ -28,6 +28,7 @@ public class CategoryService {
 
         //HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //System.out.println("service层获取参数： " + req.getParameter("name"));;
+
         return productCategoryDao.findAll(query);
     }
 

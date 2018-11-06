@@ -1,4 +1,4 @@
-package com.imooc.netty;
+package com.imooc.netty.zookeeper;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -14,7 +14,7 @@ public class ZookeeperFactory {
     public static CuratorFramework create() {
         if (client == null) {
             client = CuratorFrameworkFactory.builder()
-                    .connectString("112.35.29.127:2181")
+                    .connectString("127.0.0.1:2181")
                     .sessionTimeoutMs(5000)
                     .retryPolicy(new ExponentialBackoffRetry(1000,3))
                     .build();

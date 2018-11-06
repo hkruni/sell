@@ -8,7 +8,6 @@ import java.util.Date;
 
 public class Query {
 
-    @Getter @Setter private Integer name;
 
     @Getter @Setter private Integer categoryId;
 

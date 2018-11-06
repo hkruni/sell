@@ -1,7 +1,7 @@
-package com.imooc.netty;
+package com.imooc.netty.bean;
 
 /**
- * Created by hukai on 2018/8/22.
+ * 服务端接收到的客户端请求
  */
 public class ServerRequest {
 
@@ -9,7 +9,7 @@ public class ServerRequest {
 
     private Object content;//客户端内容
 
-    private String command;//访问的类和方法
+    private String command;//访问的类和方法,spring用
 
     public Long getId() {
         return id;

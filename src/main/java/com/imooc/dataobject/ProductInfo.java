@@ -1,5 +1,6 @@
 package com.imooc.dataobject;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.imooc.enums.ProductStatusEnum;
 import com.imooc.util.EnumUtil;
@@ -43,12 +44,30 @@ public class ProductInfo implements Serializable{
     /** 类目编号. */
     private Integer categoryType;
 
-    private Date createTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
     @JsonIgnore
     public ProductStatusEnum getProductStatusEnum() {
         return EnumUtil.getByCode(productStatus, ProductStatusEnum.class);
+    }
+
+    @Override
+    public String toString() {
+        return "ProductInfo{" +
+                "productId='" + productId + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productPrice=" + productPrice +
+                ", productStock=" + productStock +
+                ", productDescription='" + productDescription + '\'' +
+                ", productIcon='" + productIcon + '\'' +
+                ", productStatus=" + productStatus +
+                ", categoryType=" + categoryType +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

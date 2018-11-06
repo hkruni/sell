@@ -1,4 +1,4 @@
-package com.imooc.netty;
+package com.imooc.netty.bean;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Condition;
@@ -6,7 +6,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Created by hukai on 2018/8/22.
+ *
  * 所有的Request共用一个DefaultFutrue对象
  */
 public class DefaultFuture {
@@ -24,7 +24,10 @@ public class DefaultFuture {
         allDefault.put(clientRequest.getId(),this);
     }
 
-    //主线程获取数据,首先要等待结果
+    /**
+     * 客户端主线程同步等待获取数据,数据由channelRead线程提供
+     * @return
+     */
     public Response get(){
         lock.lock();
         try {
@@ -39,7 +42,11 @@ public class DefaultFuture {
         return this.response;
     }
 
-    //
+
+    /**
+     * 客户端channelRead线程中调用,接收到服务端响应,通知给主线程
+     * @param response
+     */
     public static void receive(Response response) {
         DefaultFuture df = allDefault.get(response.getId());
 

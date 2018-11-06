@@ -1,7 +1,7 @@
 package com.imooc.controller;
 
-import com.imooc.netty.Response;
 import com.imooc.netty.ResponseUtil;
+import com.imooc.netty.bean.Response;
 import com.imooc.object.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

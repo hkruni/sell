@@ -1,6 +1,10 @@
-package com.imooc.netty;
+package com.imooc.netty.client;
 
 import com.alibaba.fastjson.JSONObject;
+import com.imooc.netty.SimpleClientHandler;
+import com.imooc.netty.bean.ClientRequest;
+import com.imooc.netty.bean.DefaultFuture;
+import com.imooc.netty.bean.Response;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -45,7 +49,14 @@ public class TcpClient {
         }
     }
 
-    //1.每一个请求都是同一个连接 2.每个请求都要有一个ID识别
+
+
+    /**
+     *1.每一个请求都是同一个连接(并发问题,需要区分响应属于哪个请求发送的)
+     * 2.每个请求都要有一个ID识别
+     * @param request 发送的数据
+     * @return
+     */
     public static Response send(ClientRequest request){
         f.channel().writeAndFlush(JSONObject.toJSONString(request));
         f.channel().writeAndFlush("\r\n");

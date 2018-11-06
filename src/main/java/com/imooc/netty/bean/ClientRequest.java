@@ -1,9 +1,9 @@
-package com.imooc.netty;
+package com.imooc.netty.bean;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Created by hukai on 2018/8/22.
+ * 客户端发送请求的封装
  */
 public class ClientRequest {
 
@@ -13,7 +13,7 @@ public class ClientRequest {
 
     private final AtomicLong aid = new AtomicLong(1);
 
-    private String command;
+    private String command;//类和方法名称,spring中用
 
     public ClientRequest() {
         id = aid.incrementAndGet();

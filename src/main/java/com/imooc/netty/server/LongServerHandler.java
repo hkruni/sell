@@ -1,27 +1,38 @@
-package com.imooc.netty;
+package com.imooc.netty.server;
 
 import com.alibaba.fastjson.JSONObject;
+import com.imooc.netty.bean.Response;
+import com.imooc.netty.bean.ServerRequest;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 
 /**
- * @author
+ * @author  hukai
  */
-public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
+public class LongServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-//        System.out.println(msg.toString());
-//        ctx.channel().writeAndFlush("is ok\r\n");
-        //ctx.close();
 
+        System.out.println("接收到客户端消息 :" + msg);
 
+        //先把客户端的请求序列化成ServerRequest
         ServerRequest request = JSONObject.parseObject(msg.toString(),ServerRequest.class);
-        Response resp = new Response();
-        resp.setId(request.getId());//response的ID就是request的ID
-        resp.setResult("is ok");
-        ctx.channel().writeAndFlush(JSONObject.toJSONString(resp));
+
+        //构造返回给客户端的Response对象
+        Response response = new Response();
+        response.setId(request.getId());//response的id和request的id要相同
+        response.setResult("is ok");
+
+
+//        System.out.println("command : " + request.getCommand());
+//        Media media = Media.newInstance();
+//        Response response = media.process(request);
+
+
+
+        ctx.channel().writeAndFlush(JSONObject.toJSONString(response));
         ctx.channel().writeAndFlush("\r\n");
     }
 
@@ -38,8 +49,8 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
 
 
             }else if (event.state().equals(IdleState.ALL_IDLE)) {
-                System.out.println("读写空闲");
-                ctx.channel().writeAndFlush("ping\r\n");
+                //System.out.println("读写空闲");
+                //ctx.channel().writeAndFlush("ping\r\n");
             }
         }
     }

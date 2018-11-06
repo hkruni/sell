@@ -50,11 +50,12 @@ public class ElasticSearchController {
         if(!result.isExists()) {
             return  new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(result.getSource(), HttpStatus.OK);
+        //return new ResponseEntity(result.getSource(), HttpStatus.OK);
+        return new ResponseEntity(result.getSourceAsString(), HttpStatus.OK);
     }
 
     /**
-     * 增加一本书
+     * 增加文档
      * @param title
      * @param author
      * @param word_count

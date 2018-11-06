@@ -1,5 +1,6 @@
-package com.imooc.netty;
+package com.imooc.netty.client;
 
+import com.imooc.netty.SimpleClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -16,11 +17,14 @@ import io.netty.util.AttributeKey;
 
 /**
  * Created by hukai on 2018/8/21.
+ *
+ * netty 客户端
  */
 public class NettyClient {
 
     public static void main(String[] args) throws InterruptedException {
         EventLoopGroup workGroup = new NioEventLoopGroup();
+
         try {
             Bootstrap b = new Bootstrap();
             b.group(workGroup)
@@ -32,7 +36,7 @@ public class NettyClient {
                                 throws Exception {
                             ch.pipeline().addLast(new DelimiterBasedFrameDecoder(Integer.MAX_VALUE, Delimiters.lineDelimiter()[0]));
                             ch.pipeline().addLast(new StringDecoder());
-                            ch.pipeline().addLast(new SimpleClientHandler());
+                            ch.pipeline().addLast(new LongSimpleClientHandler());
                             ch.pipeline().addLast(new StringEncoder());
 
                         }
@@ -45,7 +49,7 @@ public class NettyClient {
             //等待服务端监听端口关闭
             f.channel().closeFuture().sync();
 
-            Object result = f.channel().attr(AttributeKey.valueOf("sssss")).get();
+            Object result = f.channel().attr(AttributeKey.valueOf("attr1")).get();
             System.out.println("获取到服务器返回的数据=== " + result);
 
         } catch (Exception e) {

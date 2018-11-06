@@ -24,7 +24,10 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 
-
+/**
+ * 登录校验拦截器
+ * 对@LoginRequired注解的方法进行校验
+ */
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Autowired
@@ -49,17 +52,17 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             PrintWriter out = null;
 
             String token = request.getParameter("token");
-            if (token == null) {
+            if (token == null) {//没有登录
                 out = response.getWriter();
                 out.print(JSONObject.toJSONString(ResultVOUtil.error(ResultEnum.LOGIN_FAIL)));
                 return false;
             }
             //String usercode = TokenUtil.getUseCode(token);
             User user = (User)redisTemplate.opsForHash().get("session",token);
-            if (user != null && TokenUtil.isValidToken(token,user.getPassword())) {
+            if (user != null && TokenUtil.isValidToken(token,user.getPassword())) {//token验证成功
                 return true;
             }
-            else{
+            else{//token验证失败
                 out = response.getWriter();
                 out.print(JSONObject.toJSONString(ResultVOUtil.error(ResultEnum.LOGIN_FAIL)));
                 return false;

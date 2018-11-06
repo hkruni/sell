@@ -1,14 +1,14 @@
-package com.imooc.netty;
+package com.imooc.netty.spring;
 
 import java.lang.reflect.Method;
 
 /**
- * Created by hukai on 2018/8/26.
+ *bean方法的封装
  */
 public class BeanMethod {
 
-    private Object bean;
-    private Method method;
+    private Object bean;//所属bean
+    private Method method;//方法
 
 
     public Method getMethod() {

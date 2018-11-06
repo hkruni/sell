@@ -1,7 +1,9 @@
-package com.imooc.netty;
+package com.imooc.netty.spring;
+
+import com.imooc.netty.bean.Response;
 
 /**
- * Created by hukai on 2018/8/26.
+ * 服务端使用,构造response
  */
 public class ResponseUtil {
 

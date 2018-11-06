@@ -1,5 +1,6 @@
 package com.imooc.service;
 
+import com.google.common.collect.Lists;
 import com.imooc.dao.ProductCategoryDao;
 import com.imooc.dao.ProductInfoDao;
 import com.imooc.dataobject.ProductCategory;
@@ -42,7 +43,25 @@ public class ProductService {
     }
 
     public List<ProductInfo> findAll() {
-        return productInfoDao.findAll();
+        List<ProductInfo>  list =  productInfoDao.findAll();
+        Map<Integer,List<ProductInfo>> map = new HashMap<>();
+        for (ProductInfo productInfo : list) {
+            Integer categoryType = productInfo.getCategoryType();
+            if (map.get(categoryType) == null) {
+                List<ProductInfo> productInfoList = Lists.newArrayList(productInfo);
+                map.put(categoryType,productInfoList);
+            } else {
+                map.get(categoryType).add(productInfo);
+            }
+        }
+
+        for (Map.Entry<Integer, List<ProductInfo>> integerListEntry : map.entrySet()) {
+            System.out.println(integerListEntry.getKey() + "--------------");
+            integerListEntry.getValue().stream().forEach(System.out::println);
+        }
+
+        return list;
+
     }
 
     public ProductInfo save(ProductInfo productInfo) {
@@ -146,4 +165,7 @@ public class ProductService {
         return productCategoryDao.updateProduct(10,map);
 
     }
+
+
+
 }

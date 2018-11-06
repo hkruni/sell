@@ -1,14 +1,18 @@
-package com.imooc.netty;
+package com.imooc.netty.bean;
 
 /**
  * Created by hukai on 2018/8/22.
  */
 public class Response {
 
-    private Long id;
+    private Long id;//响应结果id
+
     private Object result;//响应结果
-    private String code;//00000表示成功,其他表示失败
+
+    private String code = "00000";//00000表示成功,其他表示失败
+
     private String msg;//失败原因
+
     public Long getId() {
         return id;
     }
