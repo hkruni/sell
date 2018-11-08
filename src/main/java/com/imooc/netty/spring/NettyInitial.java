@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by hukai on 2018/8/26.
  */
-@Component
+//@Component
 public class NettyInitial implements ApplicationListener<ContextRefreshedEvent>{
 
 

@@ -72,18 +72,9 @@ public class ProductService {
 
 
     public void increaseCatagoryAndProduct(ProductCategory productCategory) {
-        try {
             int x = productCategoryDao.save(productCategory);
             System.out.println("increaseCatagoryAndProduct : " + x);
-        }catch (Exception e) {
-            System.out.println("1111111111111111");
-            //e.printStackTrace();
-        }
 
-
-        //int a = 1 / 0;
-
-        //productInfoDao.save(productInfo);
     }
 
 

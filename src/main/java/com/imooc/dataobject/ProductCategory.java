@@ -36,7 +36,7 @@ public class ProductCategory implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
-    private List<ProductInfo> productInfoList;
+    //private List<ProductInfo> productInfoList;
 
     public ProductCategory() {
     }
