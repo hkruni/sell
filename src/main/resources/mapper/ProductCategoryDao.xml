@@ -3,7 +3,6 @@
 <mapper namespace="com.imooc.dao.ProductCategoryDao">
 
     <resultMap type="com.imooc.dataobject.ProductCategory" id="productCategoryMap">
-
         <id property="categoryId" column="category_id" javaType="java.lang.Integer" />
         <result property="categoryName" column="category_name" javaType="java.lang.String" />
         <result property="categoryType" column="category_type" javaType="java.lang.Integer" />
@@ -23,15 +22,25 @@
             <result property="productIcon" column="product_icon" javaType="java.lang.String" />
             <result property="productStatus" column="product_status" javaType="java.lang.Integer" />
             <result property="categoryType" column="product_category_type" javaType="java.lang.Integer" />
+            <!--这里create_time在两个表中都有,所以要用一个别名-->
+            <result property="createTime" column="create_time_info" javaType="java.util.Date" />
+            <result property="updateTime" column="update_time_info" javaType="java.util.Date" />
         </collection>
     </resultMap>
 
+    <!---->
+    <!---->
+    <sql id="col">
+        p.category_id,p.category_name,p.create_time,p.update_time,i.product_id,p.category_type,
+        i.product_name,i.product_price,i.product_stock,i.product_description,i.product_icon,i.product_status,
+        i.category_type product_category_type,i.create_time as create_time_info,i.update_time as update_time_info
+    </sql>
+
+
     <!--返回结果为1代表插入成功-->
     <insert id="save" useGeneratedKeys="true" keyProperty="categoryId" keyColumn="category_id">
-        <selectKey resultType="java.lang.Integer" keyProperty="categoryId" order="AFTER" >
-            SELECT LAST_INSERT_ID();
-        </selectKey>
-        INSERT INTO product_category (category_name, category_type) VALUES (#{categoryName}, #{categoryType});
+
+        REPLACE INTO product_category (category_name, category_type) VALUES (#{categoryName}, #{categoryType})
     </insert>
 
     <select id="findByCategoryTypeIn" resultType="ProductCategory" parameterType="java.util.List">
@@ -46,21 +55,34 @@
     <select id="findAll" resultType="ProductCategory" parameterType="com.imooc.vo.Query">
         select p.category_id,p.category_name,p.category_type,p.create_time,p.update_time
         from product_category p
-        <if test="query.name !=null and query.name != '' ">
-          <where>
-              p.category_name like CONCAT( #{query.name}, '%');
-          </where>
-        </if>
+        <where>
+            <if test="categoryName !=null and categoryName != '' ">
+                  AND  p.category_name =#{categoryName}
+            </if>
+            <if test="categoryId !=null  ">
+                AND p.category_id=#{categoryId}
+            </if>
+            <if test="categoryType == 5  ">
+                AND p.category_type=5
+            </if>
+            <if test="categoryType == 0  ">
+                AND p.category_type=0
+            </if>
+            <if test="categoryType == null  ">
+                <![CDATA[AND p.category_type<8]]>
+
+            </if>
+        </where>
     </select>
 
-    <select id="findAllWithProduct" resultMap="CategoryWithProduct">
-        select p.category_id,p.category_name,p.category_type,p.create_time,p.update_time,i.product_id,
-        i.product_name,i.product_price,i.product_stock,i.product_description,i.product_icon,i.product_status,i.category_type product_category_type
+    <select id="findAllWithProduct" parameterType="integer" resultMap="CategoryWithProduct">
+        select <include refid="col"/>
         from product_category p
-        left join product_info i on p.category_type=i.category_type;
+        left join product_info i on p.category_type=i.category_type
+        where p.category_type=#{categoryType};
     </select>
 
-    <select id="findOne" resultType="ProductCategory" parameterType="java.lang.Integer">
+    <select id="findOne" resultType="productCategory" parameterType="java.lang.Integer">
         select p.category_id,p.category_name,p.category_type,p.create_time,p.update_time
         from product_category p
         where p.category_id=#{id};

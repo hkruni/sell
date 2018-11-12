@@ -41,4 +41,24 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public User() {
+    }
+
+    public User(Integer id, String usercode, String username, String password) {
+        this.id = id;
+        this.usercode = usercode;
+        this.username = username;
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", usercode='" + usercode + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

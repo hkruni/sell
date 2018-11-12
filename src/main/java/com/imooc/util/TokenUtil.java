@@ -27,6 +27,10 @@ public class TokenUtil {
         return token;
     }
 
+    public static String generateToken() {
+        return UUID.randomUUID().toString().replace("-","");
+    }
+
 
     public static boolean isValidToken(String token,String sign) {
         JWTVerifier verifier = null;

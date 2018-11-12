@@ -13,28 +13,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 public class AuthenticationController {
 
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
 
     @PostMapping("/login")
-    public Object login(User user) {
-        User userInDataBase = userService.getUserByUsercode(user.getUsercode());
-        //JSONObject jsonObject = new JSONObject();
-        if (userInDataBase == null) {//用户名不存在
-            return ResultVOUtil.error(ResultEnum.LOGIN_FAIL);
-        } else if (!user.getPassword().equals(userInDataBase.getPassword())) {//密码错误
-            return ResultVOUtil.error(ResultEnum.LOGIN_FAIL);
-        } else {//验证通过
-            String token = TokenUtil.getToken(userInDataBase);
-            redisTemplate.opsForHash().put("session",token,user);
-            redisTemplate.multi();
-            return ResultVOUtil.success(token);
-        }
+    public Object login(HttpServletResponse httpServletResponse,User user) {
+        String  token = userService.login(httpServletResponse,user);
+        return ResultVOUtil.success(token);
     }
 }

@@ -1,15 +1,23 @@
 
-<configuration>
+<!--scan：当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true.
+scanPeriod：设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟.
+debug：当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。-->
+<configuration scan="true" scanPeriod="60 second" debug="false">
 
     <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 临界值过滤器-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>
-                %d - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss} %p %msg %n
             </pattern>
         </layout>
     </appender>
 
     <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--级别过滤器,匹配ERROR级别的日志会拒绝,不是ERROR级别的日志会被记录-->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>DENY</onMatch>
@@ -22,13 +30,15 @@
         </encoder>
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--路径-->
-            <fileNamePattern>C:\log\info.%d.log</fileNamePattern>
+            <!--每天生成一个文件,保存30天,路径如下-->
+            <fileNamePattern>/Users/lifei/Documents/logback/info.%d.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
         </rollingPolicy>
     </appender>
 
 
     <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 临界值过滤器,过滤掉ERROR级别以下的日志,只保留ERROR-->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
         </filter>
@@ -40,11 +50,12 @@
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--路径-->
-            <fileNamePattern>C:\log\error.%d.log</fileNamePattern>
+            <fileNamePattern>/Users/lifei/Documents/logback/error.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
-    <root level="info">
+    <!--默认debug级别,表示大于等于debug级别的日志会往三处appender发送-->
+    <root level="debug">
         <appender-ref ref="consoleLog" />
         <appender-ref ref="fileInfoLog" />
         <appender-ref ref="fileErrorLog" />

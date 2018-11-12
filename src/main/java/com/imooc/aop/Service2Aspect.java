@@ -4,17 +4,19 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
  * Created by hukai on 2018/7/21.
  */
 
-@Aspect
-@Component
+//@Aspect
+//@Component
+//@Order(2)
 public class Service2Aspect {
 
-    @Pointcut("execution(public * com.imooc.service.*.*())")
+    @Pointcut("execution(public * com.imooc.service.*.*(..))")
     public void method3(){}
 
 
@@ -26,7 +28,7 @@ public class Service2Aspect {
         try {
             joinPoint.proceed();
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+            throw new RuntimeException();
         }
         System.out.println("method3拦截后");
     }

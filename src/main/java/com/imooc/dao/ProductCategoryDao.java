@@ -20,11 +20,11 @@ public interface ProductCategoryDao {
 
     ProductCategory findOne(@Param("id") Integer id);
 
-    List<ProductCategory> findAll(@Param("query") Query query);
+    List<ProductCategory> findAll(Query query);
 
     public int save(ProductCategory productCategory);
 
-    List<ProductCategory> findAllWithProduct();
+    List<ProductCategory> findAllWithProduct( @Param("categoryType")Integer categoryType );
 
     public int updateProduct(@Param("id") Integer id,@Param("map") Map<String ,Object> map);
 

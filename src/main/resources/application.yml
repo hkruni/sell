@@ -1,4 +1,12 @@
+server:
+  port: 9000
+  tomcat:
+    max-threads: 1000
+
 spring:
+  profiles:
+    active: prod,multi #同时加载多个配置文件
+
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
@@ -23,11 +31,12 @@ spring:
     host: 127.0.0.1
     database: 0
     port: 6379
+    timeout: 1000
     pool:
-      max-idle: 8
-      min-idle: 0
-      max-active: 8
-      max-wait: -1
+      max-idle: 20 #最大空闲连接数
+      min-idle: 0 #最小空闲连接数
+      max-active: -1 #最大连接数，-1：没有限制
+      max-wait: -1 #单位毫秒连接池最大组阻塞时间，-1：没有限制
     password:
 mybatis:
   type-aliases-package: com.imooc.dataobject
@@ -38,5 +47,27 @@ mybatis:
 elasticsearch:
     cluster:
         name: wali
-    host: 112.35.85.157
+    host: localhost
     port: 9300
+
+
+#============== kafka ===================
+kafka:
+  consumer:
+    zookeeper-connect: 112.35.79.103:2181
+    bootstrap-servers: 112.35.79.103:9092
+    enable-auto-commit: true
+    session-timeout: 6000
+    auto-commit-interval: 100
+    auto-offset-reset: latest
+    topic: topic1
+    group-id: topic1
+    concurrency: 10
+
+  producer:
+    bootstrap-servers: 112.35.79.103:9092,112.35.79.103:9093,112.35.79.103:9094
+    retries: 0
+    batch-size: 4096
+    linger: 1
+    buffer-memory: 40960
+
